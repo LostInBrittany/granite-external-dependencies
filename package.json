@@ -1,0 +1,19 @@
+{
+  "name": "@granite-elements/granite-external-dependencies",
+  "description": "A set of elements and mixins to grab external dependencies (CSS and JS...)",
+  "main": "granite-external-dependencies.js",
+  "homepage": "https://github.com/LostInBrittany/granite-external-dependencies",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LostInBrittany/granite-external-dependencies"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0"
+  },
+  "devDependencies": {
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "wct-browser-legacy": "^1.0.0"
+  }
+}
