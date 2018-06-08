@@ -29,6 +29,7 @@ let _GraniteCssInjector = (baseClass) => {
                 if (file.css) {
                     if (this.debug) {
                       console.log(`[GraniteCssInjector] connectedCallback - CSS ${file.name} already available`);
+                      this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
                     }
                 } else {
                     if (this.debug) {
