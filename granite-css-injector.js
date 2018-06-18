@@ -29,10 +29,10 @@ let _GraniteCssInjector = (baseClass) => {
                 if (file.css) {
                     if (this.debug) {
                       console.log(`[GraniteCssInjector] connectedCallback - CSS ${file.name} already available`);
-                      if (this.shadowRoot) {
-                        this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
-                      }
-                      this._cssToAdd += file.css;
+                      let style = document.createElement('style');
+                      style.type = 'text/css';
+                      style.appendChild(document.createTextNode(file.css));
+                      this.shadowRoot.appendChild(style); 
                     }
                 } else {
                     if (this.debug) {
@@ -40,10 +40,10 @@ let _GraniteCssInjector = (baseClass) => {
                     }
                     document.addEventListener(`${file.name}-css-available`, (evt) => {
                       console.log(`[GraniteCssInjector] connectedCallback - received CSS ${file.name} available method`);
-                      this._cssToAdd += file.css;
-                      if (this.shadowRoot) {
-                        this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
-                      }
+                      let style = document.createElement('style');
+                      style.type = 'text/css';
+                      style.appendChild(document.createTextNode(file.css));
+                      this.shadowRoot.appendChild(style);
                     });
                 }
             });
@@ -56,9 +56,9 @@ let _GraniteCssInjector = (baseClass) => {
         }
 
         static get properties() {
-            _cssToAdd: {
-                type: String;
-            }
+            return {
+
+            };
         }
 
         static pathFromUrl(url) {
