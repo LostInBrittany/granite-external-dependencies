@@ -20,7 +20,7 @@ let _GraniteCssInjector = (baseClass) => {
                 cssFiles = this.constructor.cssFiles;
                 getCSS(this.constructor.nodeModulesPath);
             }
-        }s
+        }
 
         connectedCallback() {
             super.connectedCallback();
