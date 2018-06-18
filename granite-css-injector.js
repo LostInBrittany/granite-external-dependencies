@@ -6,7 +6,7 @@ let _GraniteCssInjector = (baseClass) => {
 
     function getCSS(nodeModulesPath) {
         cssFiles.forEach(async (file) => {
-            let response = await fetch(`${nodeModulesPath}${file.path}`);
+            let response = await fetch(`${nodeModulesPath}${file.path}`, {'credentials':'include'});
             file.css = await response.text();
             console.log('[GraniteCssInjector] getCSS', file.name, file.path, file.css);
             document.dispatchEvent(new CustomEvent(`${file.name}-css-available`, {detail: file.css}));
@@ -20,7 +20,7 @@ let _GraniteCssInjector = (baseClass) => {
                 cssFiles = this.constructor.cssFiles;
                 getCSS(this.constructor.nodeModulesPath);
             }
-        }
+        }s
 
         connectedCallback() {
             super.connectedCallback();
@@ -29,7 +29,8 @@ let _GraniteCssInjector = (baseClass) => {
                 if (file.css) {
                     if (this.debug) {
                       console.log(`[GraniteCssInjector] connectedCallback - CSS ${file.name} already available`);
-                      this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
+                      // this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
+                      this._cssToAdd += file.css;
                     }
                 } else {
                     if (this.debug) {
@@ -37,7 +38,8 @@ let _GraniteCssInjector = (baseClass) => {
                     }
                     document.addEventListener(`${file.name}-css-available`, (evt) => {
                       console.log(`[GraniteCssInjector] connectedCallback - received CSS ${file.name} available method`);
-                      this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
+                      this._cssToAdd += file.css;
+                      //this.shadowRoot.querySelector('style').appendChild(document.createTextNode(file.css));
                     });
                 }
             });
@@ -47,6 +49,12 @@ let _GraniteCssInjector = (baseClass) => {
             return [
                 { name: 'cssFile', path: 'moduleName/cssFile.css' }
             ];
+        }
+
+        static get properties() {
+            _cssToAdd: {
+                type: String;
+            }
         }
 
         static pathFromUrl(url) {
